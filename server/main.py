@@ -7,7 +7,7 @@ from server import Server
 
 
 # open sockets
-server = Server('', 1238)
+server = Server('', 1240)
 server.listen_conns(5)
 
 print(f'\033[92mlistening for connections...\033[00m')
