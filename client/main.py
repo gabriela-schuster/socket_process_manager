@@ -16,4 +16,4 @@ def request_kill_process(pid):
 
 
 eel.init('client/web')
-eel.start('index.html', size=(850, 400), port=0, mode='firefox') # TODO: let chrome
+eel.start('index.html', size=(850, 400), port=0)
