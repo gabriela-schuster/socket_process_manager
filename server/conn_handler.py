@@ -26,10 +26,10 @@ def replier(client, cmd):
         pid = cmd.replace('terminate ', '')
         print(f'\033[93m{client} requested to terminate process {pid}\033[00m')
         try:
-            # os.popen('').read()
+            scanner.terminate_ps(int(pid))
             client.sendall('success'.encode())
-        except:
-            client.sendall('error'.encode())
+        except Exception as e:
+            client.sendall(f'error: {e}'.encode())
 
     else:
         client.sendall('invalid operation'.encode())

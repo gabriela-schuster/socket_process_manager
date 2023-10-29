@@ -11,4 +11,9 @@ class Scanner():
             process_list.append(f'PID {process.info["pid"]} NAME {process.info["name"]}')
         
         return process_list
+    
+
+    def terminate_ps(self, pid):
+        target_process = psutil.Process(pid)
+        target_process.kill()
 

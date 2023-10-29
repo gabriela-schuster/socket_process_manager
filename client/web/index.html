@@ -10,6 +10,11 @@
 <body class="bg-gray-900 text-slate-300">
 	<h1 class="text-5xl font-bold text-center mt-10 mb-10">Process Manager</h1>
 
+	<div class="flex mt-10 mb-10 justify-center gap-7">
+		<input type="text" placeholder="PID" name="pid" id="pid" class="h-12 border rounded-md focus:ring-teal-700 focus:border-teal-500 p-2.5 bg-gray-800 border-gray-600 placeholder-gray-400 text-white">
+		<button onclick="kill_process()" class="h-12 p-2 bg-slate-700 shadow-bg rounded-md border border-slate-700">Kill</button>
+	</div>
+
 	<div class="grid justify-center">
 		<table class="table-auto shadow-bg ">
 			<thead>
@@ -28,11 +33,13 @@
 <script>
 	function update_processes() {
 		tbodyEl = document.body.getElementsByTagName('tbody')[0]
+		valid_pids = []
 		
 		eel.get_processes()(function (processes) {
 			for (process of processes) {
 				processSplitted = process.split(' ')
 				const pid = processSplitted[1]
+				valid_pids.push(pid)
 				const name = processSplitted.slice(3)
 
 				let pidEl = document.createElement('td')
@@ -49,6 +56,18 @@
 			}
 		})
 
+	}
+
+	function kill_process() {
+		pid = document.getElementById('pid').value
+		if (valid_pids.includes(pid) == false) {
+			return alert('invalid PID :(')
+		}
+
+		const status = eel.request_kill_process(pid)(function (status) {
+			alert(status)
+			update_processes()
+		})
 	}
 
 	update_processes()
