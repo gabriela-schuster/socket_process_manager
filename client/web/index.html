@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>process manager</title>
+	<script rel='text/javascript' src='./eel.js'></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-slate-300">
+	<h1 class="text-5xl font-bold text-center mt-10 mb-10">Process Manager</h1>
+
+	<div class="grid justify-center">
+		<table class="table-auto shadow-bg ">
+			<thead>
+				<tr>
+					<th class="border-b font-medium border-slate-600 p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">PID</th>
+					<th class="border-b font-medium border-slate-600 p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">Name</th>
+				</tr>
+			</thead>
+			<tbody class="bg-slate-800">
+				
+			</tbody>
+		</table>
+	</div>
+</body>
+
+<script>
+	function update_processes() {
+		tbodyEl = document.body.getElementsByTagName('tbody')[0]
+		
+		eel.get_processes()(function (processes) {
+			for (process of processes) {
+				processSplitted = process.split(' ')
+				const pid = processSplitted[1]
+				const name = processSplitted.slice(3)
+
+				let pidEl = document.createElement('td')
+				pidEl.innerHTML = pid
+				pidEl.classList.add('border-b', 'border-slate-700', 'p-4', 'pl-8', 'text-slate-400')
+				let nameEl = document.createElement('td')
+				nameEl.classList.add('border-b', 'border-slate-700', 'p-4', 'pl-8', 'text-slate-400', 'overflow-x-auto')
+				nameEl.innerHTML = name
+				let tdWrapper = document.createElement('tr')
+
+				tdWrapper.insertAdjacentElement('beforeend', pidEl)
+				tdWrapper.insertAdjacentElement('beforeend', nameEl)
+				tbodyEl.insertAdjacentElement('beforeend', tdWrapper)
+			}
+		})
+
+	}
+
+	update_processes()
+</script>
+</html>

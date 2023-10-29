@@ -1,7 +1,13 @@
+import eel
 from client import Client
 
 
 client = Client('127.0.0.1', 1240)
-while True:
-    print(client.request_ps())
-    pid = int(input('PID to terminate: '))
+
+@eel.expose
+def get_processes():
+    return client.request_ps()
+
+
+eel.init('client/web')
+eel.start('index.html', size=(850, 400), port=0, mode='firefox') # TODO: let chrome

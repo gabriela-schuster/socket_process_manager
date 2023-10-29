@@ -19,3 +19,9 @@ class Client:
                 print('got all processes from server')
                 return pss
             pss.append(ps)
+
+
+    def request_terminate_process(self, pid):
+        self.client.sendall(f'terminate {pid}'.encode())
+        success = self.client.recv(2048).decode()
+        return success
